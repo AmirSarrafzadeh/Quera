@@ -3,13 +3,20 @@ class Chain:
         self.values = [value] if value is not None else []
 
     def __call__(self, next_value):
-        if isinstance(self.values[0], bool) or isinstance(next_value, bool):
-            raise Exception("invalid operation")
-        elif isinstance(next_value, (int, float)) and isinstance(self.values[0], (int, float)):
-            self.values.append(next_value)
-        elif isinstance(next_value, str) and isinstance(self.values[0], str):
-            self.values.append(next_value)
-        else:
+        for item in self.values:
+            if item is None or next_value is None:
+                raise Exception("invalid operation")
+            elif isinstance(self.values, bool) or isinstance(next_value, bool):
+                raise Exception("invalid operation")
+            elif isinstance(next_value, (int, float)) and isinstance(item, (int, float)):
+                self.values.append(next_value)
+                break
+            elif isinstance(next_value, str) and isinstance(item, str):
+                self.values.append(next_value)
+                break
+            else:
+                raise Exception("invalid operation")
+        if next_value is None:
             raise Exception("invalid operation")
         return self
 
@@ -38,4 +45,4 @@ class Chain:
         else:
             raise Exception("invalid operation")
 
-print(22)
+Chain('Ali')('Safinal')('is')('the')('best.')
